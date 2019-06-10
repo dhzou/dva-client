@@ -1,15 +1,12 @@
 import React from 'react'
 import { Route, Redirect, } from 'react-router-dom'
-import { isAuthenticated } from '../utils/session'
+import { isAuthenticated ,wechatAuth} from '../utils/session'
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
-    !!isAuthenticated()
+    (!!isAuthenticated() || !!wechatAuth())
       ? <Component {...props} />
-      : <Redirect to={{
-        pathname: '/login',
-        state: {from: props.location}
-      }}/>
+      :null
   )}/>
 )
 

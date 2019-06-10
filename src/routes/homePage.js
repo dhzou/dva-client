@@ -12,9 +12,6 @@ class homePage extends React.Component {
     super(props);
     this.state = {
       users: [
-      
-    
-    
 
         {
           id: 8,
@@ -85,14 +82,14 @@ class homePage extends React.Component {
     };
   }
   componentDidMount() {
-    const cookies = isAuthenticated();
-    if (cookies) {
-      const userInfo = JSON.parse(cookies);
-      this.setState({
-        userName: userInfo.username,
-        password: userInfo.password
-      });
-    }
+    // const cookies = isAuthenticated();
+    // if (cookies) {
+    //   const userInfo = JSON.parse(cookies);
+    //   this.setState({
+    //     userName: userInfo.username,
+    //     password: userInfo.password
+    //   });
+    // }
   }
 
   handleItemClick = (item) =>{
@@ -103,22 +100,9 @@ class homePage extends React.Component {
   }
 
   handleClick = () => {
-    if (!this.state.userName || !this.state.password) {
-      Toast.info("参数不能为空");
-      return;
-    } else {
-      login({
-        username: this.state.userName,
-        password: this.state.password
-      }).then(data => {
-        if (data.data.status === 0) {
-          authenticateSuccess(JSON.stringify(data.data.data));
-          this.props.dispatch(routerRedux.push("/result"));
-        } else {
-          Toast.info(data.data.message);
-        }
-      });
-    }
+    this.props.dispatch(routerRedux.push({
+      pathname: '/newUser'
+    }))
   };
   render() {
     return (

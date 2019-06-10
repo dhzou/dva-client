@@ -1,4 +1,6 @@
 
+
+import {authInfo}  from '../services/service';
 const URI = require('urijs');
 const LOGIN_COOKIE_NAME = 'openId'
 
@@ -35,6 +37,10 @@ export function wechatAuth() {
   const query = uri.query(true);
   const {code} = query;
   if(code) {
+    authInfo({code:code,appid:"wxa8980d28e4a9d7a2"}).then(data=>{
+      alert(JSON.stringify(data));
+      authenticateSuccess("sss")
+    })
      return true;
   } else {
       document.location = generateGetCodeUrl(document.location.href);

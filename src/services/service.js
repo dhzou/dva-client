@@ -18,3 +18,11 @@ export const search = (params)=>{
 export const authInfo = (params) =>{
   return axios.get('/wxSigns/wx/Oauth',{params:params});
 }
+
+export const userInfo = params => {
+  return axios.get("/uc/api/testUser/getTestUser", { params: params });
+};
+
+export const getUsers = (params) =>{
+  return axios.get('/uc/api/testUser/list?openid=');
+}

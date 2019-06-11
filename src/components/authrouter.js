@@ -4,9 +4,7 @@ import { isAuthenticated ,wechatAuth} from '../utils/session'
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
-    (!!isAuthenticated() || !!wechatAuth())
-      ? <Component {...props} />
-      :null
+    <Component {...props} />
   )}/>
 )
 

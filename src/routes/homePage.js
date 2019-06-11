@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "dva";
 import { List, Button, NavBar, Toast } from "antd-mobile";
-import { login } from "../services/service";
+import { login,getUsers } from "../services/service";
 import styles from "../assets/css/home.less";
 import { isAuthenticated, authenticateSuccess } from "../utils/session";
 import { routerRedux } from "dva/router";
@@ -13,71 +13,6 @@ class homePage extends React.Component {
     this.state = {
       users: [
 
-        {
-          id: 8,
-          userid: 71,
-          testUserCode: "8",
-          testName: "测试6号",
-          gender: "男",
-          birthday: 1559491200000,
-          stat: "ACTIVE",
-          age: 33,
-          cid: null,
-          openid: null,
-          type: null
-        },
-        {
-          id: 9,
-          userid: 71,
-          testUserCode: "9",
-          testName: "测试6号",
-          gender: "男",
-          birthday: 1559491200000,
-          stat: "ACTIVE",
-          age: 33,
-          cid: null,
-          openid: null,
-          type: null
-        },
-        {
-          id: 10,
-          userid: 71,
-          testUserCode: "10",
-          testName: "测试6号",
-          gender: "男",
-          birthday: 1559491200000,
-          stat: "ACTIVE",
-          age: 33,
-          cid: null,
-          openid: null,
-          type: null
-        },
-        {
-          id: 11,
-          userid: 71,
-          testUserCode: "11",
-          testName: "测试9号",
-          gender: "男",
-          birthday: 1559491200000,
-          stat: "ACTIVE",
-          age: 33,
-          cid: null,
-          openid: null,
-          type: null
-        },
-        {
-          id: 12,
-          userid: 71,
-          testUserCode: "12",
-          testName: "测试9号",
-          gender: "男",
-          birthday: 1559491200000,
-          stat: "ACTIVE",
-          age: null,
-          cid: null,
-          openid: null,
-          type: null
-        }
       ]
     };
   }
@@ -90,6 +25,15 @@ class homePage extends React.Component {
     //     password: userInfo.password
     //   });
     // }
+
+    getUsers().then(data=>{
+      if (data.data.status===0){
+        this.setState({users:data.data.data.content});
+      } else {
+        Toast.info(data.data.message);
+      }
+      
+    })
   }
 
   handleItemClick = (item) =>{
@@ -110,7 +54,10 @@ class homePage extends React.Component {
         <NavBar mode="dark">用户列表</NavBar>
         <div style={{ marginTop: 16 }} className="my-list">
           <List>
-            {this.state.users.map(item=>{
+            {this.state.users.length===0 && 
+              <div style={{height:400,lineHeight:'400px',textAlign:'center'}}>暂无用户列表</div>
+            }
+            {this.state.users&&this.state.users.map(item=>{
               return     <Item key = {item.id} arrow="horizontal" onClick={()=>this.handleItemClick(item)}>
               <div style={{ display: "flex", alignItems: "center",padding:'10px 0' }}>
                 <img
